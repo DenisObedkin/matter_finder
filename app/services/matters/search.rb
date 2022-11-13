@@ -1,29 +1,40 @@
 module Matters
   class Search
     LIMIT = 5
-    class << self
-      def call(params, autocomplete = false)
-        return Matter.all.order(updated_at: :desc) unless params
+    
+    attr_accessor :params, :autocomplete
 
-        Matter.search(query, {
-          fields: %i[title],
-          where: { title: {ilike: "%#{params[:title]}%"} },
-          order: { _score: :desc, updated_at: :desc },
-          load: false 
-        }.merge(limit)).map(&:title)
-      end
+    def initialize(params = {}, autocomplete = false)
+      @params = params
+      @autocomplete = autocomplete
+    end
 
-      private
+    def call
+      return Matter.all.order(updated_at: :desc) unless params[:title].present?
 
-      def limit
-        return {} unless autocomplete
+      ids = Matter.search('*', {
+        fields: %i[title],
+        where: where,
+        order: order,
+        limit: LIMIT,
+        load: false
+      }).map(&:id)
 
-        { limit: LIMIT }
-      end
+      Matter.find(ids)
+    end
 
-      def query
-        params[:q].presence? || '*'
-      end
+    private
+
+    def where
+      return {} unless params[:title].present?
+
+      { title: {ilike: "%#{params[:title]}%"} }
+    end
+
+    def order
+      return { updated_at: :desc } unless autocomplete
+
+      { _score: :desc, updated_at: :desc }      
     end
   end
 end

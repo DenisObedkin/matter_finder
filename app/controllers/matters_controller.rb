@@ -2,9 +2,9 @@ class MattersController < ApplicationController
   before_action :find_matter, only: [:show, :edit, :update]
 
   def index
-    matters = Matters::Search.(params)
-
-    @pagy, @matters = pagy(matters)
+    @pagy, @matters = pagy(
+      Matters::Search.new(params).()
+    )
   end
 
   def new
@@ -34,7 +34,7 @@ class MattersController < ApplicationController
   end
 
   def autocomplete
-    Matters::Search.(params, autocomplete: true)
+    Matters::Search.new(params, autocomplete: true).()
   end
 
   private
