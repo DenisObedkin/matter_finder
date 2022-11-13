@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Построено на базе Ruby 2.7.6 + Rails 6.1.7
 
-Things you may want to cover:
+В Docker образах находятся БД и ES.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1) bundle install
+2) Поднимаем ES и PostgreSQL командой docker-compose up -d
+3) rails db:create
+4) rails db:migrate
+5) rails s
