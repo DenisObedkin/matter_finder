@@ -34,7 +34,7 @@ class MattersController < ApplicationController
   end
 
   def autocomplete
-    Matters::Search.new(params, autocomplete: true).()
+    @matters = Matters::Search.new(params, autocomplete: true).()
   end
 
   private

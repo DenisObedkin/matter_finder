@@ -9,13 +9,28 @@ html
 
     .container.col-md-9.text-md-center
       .container.d-flex.justify-content-between
-        .input-group.
+        .input-group
           .input-group-prepend
             span.input-group-text id="inputGroup-sizing-default"
               = 'Поиск записей'
-          input.form-control id='find_matters_field' aria-label="Default" aria-describedby="inputGroup-sizing-default" onkeypress='findClick()'
+          input.form-control id='find_matters_field' aria-label="Default" aria-describedby="inputGroup-sizing-default"
+          span.suggestions.position-absolute.zindex-popover
         = link_to 'Добавить', new_matter_path, class: 'btn btn-primary', style: 'margin-left: 20px;'
     hr
     .container.text-md-center
       .matters-list.col-xxl
         = render partial: 'matters_list'
+
+javascript:
+  $('#find_matters_field').on('input', function(e) {
+    if($(this).val() != '') {
+      $.ajax({
+        url: '/matters/autocomplete',
+        type: 'POST',
+        data: {'title' : $(this).val()}
+      });
+    } else {
+      console.log("Value is empty!!!")
+      $('.suggestions').html('').removeClass('bg-light')
+    }
+  });

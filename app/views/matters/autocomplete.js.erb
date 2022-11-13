@@ -1,0 +1,8 @@
+goal_element = $('#find_matters_field')
+$('.suggestions').addClass('bg-light')
+                 .html('<%= j render partial: 'suggestions', locals: { matters: @matters } %>')
+                 .css({
+                   top: goal_element.outerHeight(),
+                   left: goal_element.position().left,
+                   width: goal_element.outerWidth()
+                 })

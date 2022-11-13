@@ -1,0 +1,4 @@
+.container.text-md-left
+  - matters.each do |matter|
+    .md-5
+      = link_to matter.title, matter_path(matter), class: 'text-decoration-none text-dark'
