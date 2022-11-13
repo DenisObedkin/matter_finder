@@ -1,0 +1,21 @@
+html
+  head
+    title Список материалов
+    = stylesheet_link_tag :matters
+
+  body
+    h2.text-md-center.pt-5
+      = 'Список материалов'
+
+    .container.col-md-9.text-md-center
+      .container.d-flex.justify-content-between
+        .input-group.
+          .input-group-prepend
+            span.input-group-text id="inputGroup-sizing-default"
+              = 'Поиск записей'
+          input.form-control id='find_matters_field' aria-label="Default" aria-describedby="inputGroup-sizing-default" onkeypress='findClick()'
+        = link_to 'Добавить', new_matter_path, class: 'btn btn-primary', style: 'margin-left: 20px;'
+    hr
+    .container.text-md-center
+      .matters-list.col-xxl
+        = render partial: 'matters_list'

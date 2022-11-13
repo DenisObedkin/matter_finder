@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:12.13-alpine
+    hostname: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5433"
+    command: -p 5433
+    restart: always
+
+  elasticsearch:
+    image: "bitnami/elasticsearch:latest"
+    hostname: elasticsearch
+    restart: always
+    environment:
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=false"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://elasticsearch:9200"]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+    ports:
+      - 9200:9200
+
+  # kibana:
+  #   depends_on:
+  #     - elasticsearch  
+  #   image: docker.elastic.co/kibana/kibana:6.8.0
+  #   ports:
+  #     - 5601:5601
+
+volumes:
+  pgdata:
+    driver: local
+  esdata:
+    driver: local

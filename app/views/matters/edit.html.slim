@@ -1,0 +1,26 @@
+html
+  head
+    title Редактировать материал
+    = stylesheet_link_tag :matters
+
+  body
+    h2.text-md-center.pt-5
+      = 'Редактировать материал'
+    hr
+    .container.col-md-9.text-md-center
+      = form_for @matter, url: matter_path(@matter) do |f|
+        .container.text-md-left
+          .mb-3
+            label.form-label for="exampleFormControlInput1" = 'Наименование материала'
+            = f.text_field :title, class: ".col-md-2 form-control", id: "exampleFormControlInput1"
+          .mb-3
+            label.form-label for="exampleFormControlTextarea1" = 'Текст материала'
+            = f.text_area :text, class: ".col-md-2 form-control", id: "exampleFormControlTextarea1", rows: 7
+          .mb-3
+            label.form-label for="exampleFormControlTextarea1" = 'Автор'
+            = f.text_field :author, class: ".col-md-2 form-control", id: "exampleFormControlTextarea1"
+        hr
+        .container.col-md-9.text-md-center
+          = link_to 'Отмена', root_path, class: 'btn btn-danger', style: 'width: 150px;'
+          = f.submit 'Сохранить', class: 'btn btn-primary', style: 'margin-left: 20px; width: 150px;'
+

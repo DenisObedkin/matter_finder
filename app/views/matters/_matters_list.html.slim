@@ -1,0 +1,21 @@
+.pagination.container.justify-content-end
+  = (pagy_bootstrap_nav @pagy, next: '>>>').html_safe
+.data-table
+  table.table
+    thead
+      tr
+        th.text-md-center.col-2 scope="col" = 'ID'
+        th.text-md-center.col-3 scope="col" = 'Автор'
+        th.text-md-center scope="col" = 'Название'
+        th.text-md-center.col-3 scope="col" = 'Дата изменения'
+    tbody
+      - @matters.each do |matter|
+        tr
+          td.text-md-center.col-2 scope="row"
+            = link_to "#{matter.code}_#{'%06d' % matter.id}", matter_path(matter)
+          td.text-md-center.col-3 scope="row"
+            = matter.author
+          td.text-md-center scope="row"
+            = matter.title
+          td.text-md-center.col-3 scope="row"
+            = matter.updated_at.strftime("%d-%m-%Y в %H:%M")

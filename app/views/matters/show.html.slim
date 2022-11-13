@@ -1,0 +1,25 @@
+html
+  head
+    title Просмотр материала
+    = stylesheet_link_tag :matters
+
+  body
+    h2.text-md-center.pt-5
+      = 'Просмотр материала'
+    hr
+    .container.col-md-9.text-md-center
+      .container.text-md-left
+        .mb-3
+          label.form-label for="exampleFormControlInput1" = 'Наименование материала'
+          = text_field_tag :title, @matter.title, class: ".col-md-2 form-control", id: "exampleFormControlInput1", disabled: true
+        .mb-3
+          label.form-label for="exampleFormControlTextarea1" = 'Текст материала'
+          = text_area_tag :text, @matter.text, class: ".col-md-2 form-control", id: "exampleFormControlTextarea1", rows: 7, disabled: true
+        .mb-3
+          label.form-label for="exampleFormControlTextarea1" = 'Автор'
+          = text_field_tag :author, @matter.author, class: ".col-md-2 form-control", id: "exampleFormControlTextarea1", disabled: true
+      hr
+      .container.col-md-9.text-md-center
+        = link_to 'Отмена', root_path, class: 'btn btn-danger', style: 'width: 150px;'
+        = link_to 'Редактировать', edit_matter_path(@matter), class: 'btn btn-primary', style: 'margin-left: 20px; width: 150px;'
+
