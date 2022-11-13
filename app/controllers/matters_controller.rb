@@ -2,7 +2,7 @@ class MattersController < ApplicationController
   before_action :find_matter, only: [:show, :edit, :update]
 
   def index
-    matters = Matter.all.order(updated_at: :desc)
+    matters = Matters::Search.(params)
 
     @pagy, @matters = pagy(matters)
   end
@@ -17,9 +17,7 @@ class MattersController < ApplicationController
     matter = Matter.new(matter_params)
 
     if matter.valid?
-      matter.save!
-
-      redirect_to root_path
+      redirect_to root_path if matter.save!
     else
       redirect_to new_matter_path
     end
@@ -36,20 +34,10 @@ class MattersController < ApplicationController
   end
 
   def autocomplete
-    Matter.search(query, {
-      fields: %i[title],
-      where: { title: {ilike: "%#{params[:title]}%"} },
-      order: { updated_at: :desc },
-      limit: 5,
-      load: false 
-    }).map(&:title)
+    Matters::Search.(params, autocomplete: true)
   end
 
   private
-
-  def query
-    params[:q].presence? || '*'
-  end
 
   def find_matter
     @matter = Matter.find(params[:id])
