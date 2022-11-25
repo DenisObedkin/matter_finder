@@ -13,14 +13,19 @@ html
           .mb-3
             label.form-label for="exampleFormControlInput1" = 'Наименование материала'
             = f.text_field :title, class: ".col-md-2 form-control", id: "exampleFormControlInput1"
+            - if @matter.errors[:title].any?
+              p.font-weight-bold.text-danger = @matter.errors[:title].join(' ')
           .mb-3
             label.form-label for="exampleFormControlTextarea1" = 'Текст материала'
             = f.text_area :text, class: ".col-md-2 form-control", id: "exampleFormControlTextarea1", rows: 7
+            - if @matter.errors[:text].any?
+              p.font-weight-bold.text-danger = @matter.errors[:text].join(' ')
           .mb-3
             label.form-label for="exampleFormControlTextarea1" = 'Автор'
             = f.text_field :author, class: ".col-md-2 form-control", id: "exampleFormControlTextarea1"
+            - if @matter.errors[:author].any?
+              p.font-weight-bold.text-danger = @matter.errors[:author].join(' ')
         hr
         .container.col-md-9.text-md-center
           = link_to 'Отмена', root_path, class: 'btn btn-danger', style: 'width: 150px;'
           = f.submit 'Добавить', class: 'btn btn-primary', style: 'margin-left: 20px; width: 150px;'
-

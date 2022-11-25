@@ -14,12 +14,12 @@ class MattersController < ApplicationController
   def show;  end
 
   def create
-    matter = Matter.new(matter_params)
+    @matter = Matter.new(matter_params)
 
-    if matter.valid?
-      redirect_to root_path if matter.save!
+    if @matter.valid?
+      redirect_to root_path if @matter.save!
     else
-      redirect_to new_matter_path
+      render :new
     end
   end
 
